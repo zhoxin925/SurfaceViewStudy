@@ -133,6 +133,7 @@ public class TSurfaceView extends SurfaceView implements SurfaceHolder.Callback,
 //            startAngle = tempAngle;
 //        }
 
+
         startAngle = 0;
         tempAngle = sweepAngle;
         mShapePaint.setColor(colors[0]);
