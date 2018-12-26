@@ -126,53 +126,12 @@ public class TSurfaceView extends SurfaceView implements SurfaceHolder.Callback,
         mShapePaint.setStyle(Paint.Style.FILL);
         startAngle = 0;
         tempAngle = 0;
-//        for(int i=0; i<arcCount; i++) {
-//            mShapePaint.setColor(colors[1]);
-//            tempAngle += sweepAngle;
-//            canvas.drawArc(arcRectF, startAngle, sweepAngle, true, mShapePaint);
-//            startAngle = tempAngle;
-//        }
-
-
-        startAngle = 0;
-        tempAngle = sweepAngle;
-        mShapePaint.setColor(colors[0]);
-        canvas.drawArc(arcRectF, startAngle, sweepAngle, true, mShapePaint);
-
-        startAngle = tempAngle;
-        tempAngle += sweepAngle;
-        mShapePaint.setColor(colors[1]);
-        canvas.drawArc(arcRectF, startAngle, sweepAngle, true, mShapePaint);
-
-        startAngle = tempAngle;
-        tempAngle += sweepAngle;
-        mShapePaint.setColor(colors[2]);
-        canvas.drawArc(arcRectF, startAngle, sweepAngle, true, mShapePaint);
-
-        startAngle = tempAngle;
-        tempAngle += sweepAngle;
-        mShapePaint.setColor(colors[3]);
-        canvas.drawArc(arcRectF, startAngle, sweepAngle, true, mShapePaint);
-
-        startAngle = tempAngle;
-        tempAngle += sweepAngle;
-        mShapePaint.setColor(colors[4]);
-        canvas.drawArc(arcRectF, startAngle, sweepAngle, true, mShapePaint);
-
-        startAngle = tempAngle;
-        tempAngle += sweepAngle;
-        mShapePaint.setColor(colors[5]);
-        canvas.drawArc(arcRectF, startAngle, sweepAngle, true, mShapePaint);
-
-        startAngle = tempAngle;
-        tempAngle += sweepAngle;
-        mShapePaint.setColor(colors[6]);
-        canvas.drawArc(arcRectF, startAngle, sweepAngle, true, mShapePaint);
-
-        startAngle = tempAngle;
-        tempAngle += sweepAngle;
-        mShapePaint.setColor(colors[7]);
-        canvas.drawArc(arcRectF, startAngle, sweepAngle, true, mShapePaint);
+        for(int i=0; i<arcCount; i++) {
+            mShapePaint.setColor(colors[i]);
+            tempAngle += sweepAngle;
+            canvas.drawArc(arcRectF, startAngle, sweepAngle, true, mShapePaint);
+            startAngle = tempAngle;
+        }
 
         mShapePaint.setColor(Color.RED);
         mShapePaint.setStyle(Paint.Style.STROKE);
