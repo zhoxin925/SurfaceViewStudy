@@ -97,6 +97,7 @@ public class TSurfaceView extends SurfaceView implements SurfaceHolder.Callback,
 
     @Override
     public void run() {
+        int start = (int) System.currentTimeMillis();
         while(isViewCreated) {
             Canvas canvas = null;
             try {
@@ -109,6 +110,14 @@ public class TSurfaceView extends SurfaceView implements SurfaceHolder.Callback,
             } finally {
                 if(canvas != null) {
                     mHolder.unlockCanvasAndPost(canvas);
+                }
+                int end = (int) System.currentTimeMillis();
+                if(end - start < 100) {
+                    try {
+                        Thread.sleep(100 - (end - start));
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
                 }
             }
         }
