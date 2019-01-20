@@ -20,11 +20,10 @@ public class TSurfaceView extends SurfaceView implements SurfaceHolder.Callback,
     private Paint mShapePaint;
     private Paint mTextPaint;
 
-    private int width;
-    private int height;
+    private int center;
     private int padding;
     private int radius;
-    private RectF arcRectF;
+    private RectF arcRange;
 
     private boolean isViewCreated;
     private SurfaceHolder mHolder;
@@ -59,17 +58,34 @@ public class TSurfaceView extends SurfaceView implements SurfaceHolder.Callback,
         setFocusableInTouchMode(true);
         //屏幕常亮
         this.setKeepScreenOn(true);
+    }
 
-        mShapePaint = new Paint();
-        mShapePaint.setAntiAlias(true);
-        mShapePaint.setStrokeWidth(8);
+    @Override
+    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
 
-        mTextPaint = new Paint();
-        mTextPaint.setAntiAlias(true);
+        int width = MeasureSpec.getSize(widthMeasureSpec);
+        int height = MeasureSpec.getSize(heightMeasureSpec);
+
+        center = width / 2;
+        padding = getPaddingLeft();
+        radius = width - getPaddingRight() - getPaddingLeft();
+
+        setMeasuredDimension(Math.min(width, height), Math.min(width, height));
     }
 
     @Override
     public void surfaceCreated(SurfaceHolder surfaceHolder) {
+        mShapePaint = new Paint();
+        mShapePaint.setAntiAlias(true);
+        mShapePaint.setStrokeWidth(8);
+        mShapePaint.setStyle(Paint.Style.FILL);
+
+        mTextPaint = new Paint();
+        mTextPaint.setAntiAlias(true);
+
+        arcRange = new RectF(padding, padding, radius+padding, radius+padding);
+
         isViewCreated = true;
         mThread = new Thread(this);
         mThread.start();
@@ -82,17 +98,6 @@ public class TSurfaceView extends SurfaceView implements SurfaceHolder.Callback,
     public void surfaceDestroyed(SurfaceHolder surfaceHolder) {
         isViewCreated = false;
         mHolder.removeCallback(this);
-    }
-
-    @Override
-    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
-
-        width = MeasureSpec.getSize(widthMeasureSpec);
-        height = MeasureSpec.getSize(heightMeasureSpec);
-        padding = width / 15;
-        radius = (width - padding * 2) / 2;
-        arcRectF = new RectF(-radius, -radius, radius, radius);
     }
 
     @Override
@@ -125,12 +130,7 @@ public class TSurfaceView extends SurfaceView implements SurfaceHolder.Callback,
 
     //角度=180°×弧度÷π ，弧度=角度×π÷180°。
     private void drawSomeThing(Canvas canvas) {
-//        canvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);
-
-        mShapePaint.setColor(0xfff1f1f1);
-        canvas.drawRect(new Rect(padding, (height - radius*2) / 2
-                , padding + radius*2, (height - radius*2) / 2 + radius*2), mShapePaint);
-        canvas.translate(width/2, height/2);
+        canvas.drawColor(0xffffff);
 
         mShapePaint.setStyle(Paint.Style.FILL);
         startAngle = 0;
@@ -138,12 +138,12 @@ public class TSurfaceView extends SurfaceView implements SurfaceHolder.Callback,
         for(int i=0; i<arcCount; i++) {
             mShapePaint.setColor(colors[i]);
             tempAngle += sweepAngle;
-            canvas.drawArc(arcRectF, startAngle, sweepAngle, true, mShapePaint);
+            canvas.drawArc(arcRange, startAngle, sweepAngle, true, mShapePaint);
             startAngle = tempAngle;
         }
 
         mShapePaint.setColor(Color.RED);
         mShapePaint.setStyle(Paint.Style.STROKE);
-        canvas.drawCircle(0, 0, radius, mShapePaint);
+        canvas.drawCircle(center, center, radius/2, mShapePaint);
     }
 }
