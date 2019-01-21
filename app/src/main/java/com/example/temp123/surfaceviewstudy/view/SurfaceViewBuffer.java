@@ -1,6 +1,7 @@
 package com.example.temp123.surfaceviewstudy.view;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -67,18 +68,30 @@ public class SurfaceViewBuffer extends SurfaceView implements SurfaceHolder.Call
 //            }
 //        }
 
+//        for(int i=0;i<20;i++) {
+//            Canvas canvas = sHolder.lockCanvas();
+//            if(canvas != null) {
+//                canvas.drawText(i+"", getPaddingLeft(), getPaddingTop() + n, mPaint);
+//                sHolder.unlockCanvasAndPost(canvas);
+//                n += 20;
+//            }
+//            try {
+//                Thread.sleep(600);
+//            } catch (InterruptedException e) {
+//                e.printStackTrace();
+//            }
+//        }
+
+        Canvas canvas = sHolder.lockCanvas();
+        Bitmap tempBitmap = Bitmap.createBitmap(getWidth(), getHeight(), Bitmap.Config.RGB_565);
+        Canvas tempCanvas = new Canvas(tempBitmap);
         for(int i=0;i<20;i++) {
-            Canvas canvas = sHolder.lockCanvas();
-            if(canvas != null) {
-                canvas.drawText(i+"", getPaddingLeft(), getPaddingTop() + n, mPaint);
-                sHolder.unlockCanvasAndPost(canvas);
-                n += 20;
-            }
-            try {
-                Thread.sleep(600);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
+            tempCanvas.drawText(i+"", getPaddingLeft(), getPaddingTop() + n, mPaint);
+            n += 60;
+        }
+        if(canvas != null) {
+            canvas.drawBitmap(tempBitmap, getPaddingLeft(), getPaddingTop(), mPaint);
+            sHolder.unlockCanvasAndPost(canvas);
         }
     }
 }
