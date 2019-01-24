@@ -25,6 +25,7 @@ public class ChildView extends SuperView {
 
     public void onDraw(Canvas canvas) {
         super.onDraw(canvas);
+        test();
     }
 
     public void paintObjects() {
