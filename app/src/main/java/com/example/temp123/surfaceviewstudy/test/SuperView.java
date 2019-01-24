@@ -43,4 +43,8 @@ public class SuperView extends View {
     public void getValue() {
         System.out.println("test---Super------getValue()");
     }
+
+    public void test() {
+        System.out.println("test---Super------child no method");
+    }
 }
