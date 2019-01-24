@@ -33,8 +33,8 @@ public class TSurfaceView extends SurfaceView implements SurfaceHolder.Callback,
     private int sweepAngle = 360/8;
     private int tempAngle;
     private int arcCount = 8;
-    private int[] colors = new int[]{Color.BLUE, Color.YELLOW, Color.GREEN, Color.GRAY
-            , Color.BLUE, Color.YELLOW, Color.GREEN, Color.GRAY};
+    private int[] colors = new int[]{Color.RED, Color.YELLOW, Color.BLUE, Color.GREEN
+            , Color.RED, Color.YELLOW, Color.BLUE, Color.GREEN};
 
     public TSurfaceView(Context context) {
         this(context, null);
@@ -143,7 +143,7 @@ public class TSurfaceView extends SurfaceView implements SurfaceHolder.Callback,
             startAngle = tempAngle;
         }
 
-        mShapePaint.setColor(Color.RED);
+        mShapePaint.setColor(Color.GRAY);
         mShapePaint.setStyle(Paint.Style.STROKE);
         canvas.drawCircle(center, center, radius/2, mShapePaint);
     }
