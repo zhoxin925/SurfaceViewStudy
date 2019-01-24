@@ -50,6 +50,7 @@ public class TSurfaceView extends SurfaceView implements SurfaceHolder.Callback,
         mHolder.addCallback(this);
 
 //        setZOrderOnTop(true);
+//        setZOrderMediaOverlay(true);
 //        mHolder.setFormat(PixelFormat.TRANSLUCENT);
 //        mHolder.setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);
 
@@ -79,7 +80,6 @@ public class TSurfaceView extends SurfaceView implements SurfaceHolder.Callback,
         mShapePaint = new Paint();
         mShapePaint.setAntiAlias(true);
         mShapePaint.setStrokeWidth(8);
-        mShapePaint.setStyle(Paint.Style.FILL);
 
         mTextPaint = new Paint();
         mTextPaint.setAntiAlias(true);
@@ -97,13 +97,13 @@ public class TSurfaceView extends SurfaceView implements SurfaceHolder.Callback,
     @Override
     public void surfaceDestroyed(SurfaceHolder surfaceHolder) {
         isViewCreated = false;
-        mHolder.removeCallback(this);
+        //mHolder.removeCallback(this);//这句话会导致home键后绘制的内容消失，这句话千万不能加！！！哈哈哈哈
     }
 
     @Override
     public void run() {
-        int start = (int) System.currentTimeMillis();
         while(isViewCreated) {
+            int start = (int) System.currentTimeMillis();
             Canvas canvas = null;
             try {
                 canvas = mHolder.lockCanvas();
@@ -116,13 +116,13 @@ public class TSurfaceView extends SurfaceView implements SurfaceHolder.Callback,
                 if(canvas != null) {
                     mHolder.unlockCanvasAndPost(canvas);
                 }
-                int end = (int) System.currentTimeMillis();
-                if(end - start < 100) {
-                    try {
-                        Thread.sleep(100 - (end - start));
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
+            }
+            int end = (int) System.currentTimeMillis();
+            if(end - start < 100) {
+                try {
+                    Thread.sleep(100 - (end - start));
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
                 }
             }
         }
@@ -130,9 +130,10 @@ public class TSurfaceView extends SurfaceView implements SurfaceHolder.Callback,
 
     //角度=180°×弧度÷π ，弧度=角度×π÷180°。
     private void drawSomeThing(Canvas canvas) {
-        canvas.drawColor(0xffffff);
-
         mShapePaint.setStyle(Paint.Style.FILL);
+        mShapePaint.setColor(0xf2f2f2f2);
+        canvas.drawRect(0,0, getWidth(), getHeight(), mShapePaint);
+
         startAngle = 0;
         tempAngle = 0;
         for(int i=0; i<arcCount; i++) {

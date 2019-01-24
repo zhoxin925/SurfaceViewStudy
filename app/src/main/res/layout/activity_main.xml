@@ -11,6 +11,7 @@
         <!--android:src="@mipmap/ic_launcher"/>-->
 
     <com.example.temp123.surfaceviewstudy.view.TSurfaceView
+        android:id="@+id/surfaceview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_centerInParent="true"
@@ -21,5 +22,9 @@
         <!--android:layout_height="match_parent"-->
         <!--android:layout_centerInParent="true"-->
         <!--android:padding="10dip"/>-->
+
+    <!--<com.example.temp123.surfaceviewstudy.test.SuperView-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content" />-->
 
 </RelativeLayout>
