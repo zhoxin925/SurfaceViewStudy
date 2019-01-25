@@ -1,9 +1,12 @@
 package com.example.temp123.surfaceviewstudy.view;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Path;
 import android.graphics.PixelFormat;
 import android.graphics.PorterDuff;
 import android.graphics.Rect;
@@ -11,6 +14,8 @@ import android.graphics.RectF;
 import android.util.AttributeSet;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
+
+import com.example.temp123.surfaceviewstudy.R;
 
 /**
  * Created by temp123 on 2018/12/26.
@@ -33,6 +38,7 @@ public class TSurfaceView extends SurfaceView implements SurfaceHolder.Callback,
     private int sweepAngle = 360/8;
     private int tempAngle;
     private int arcCount = 8;
+    private Bitmap[] iconBitmap;
     private int[] colors = new int[]{Color.RED, Color.YELLOW, Color.BLUE, Color.GREEN
             , Color.RED, Color.YELLOW, Color.BLUE, Color.GREEN};
 
@@ -59,6 +65,12 @@ public class TSurfaceView extends SurfaceView implements SurfaceHolder.Callback,
         setFocusableInTouchMode(true);
         //屏幕常亮
         this.setKeepScreenOn(true);
+
+        iconBitmap = new Bitmap[colors.length];
+        Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.mipmap.ic_launcher);
+        for(int i=0; i<colors.length;i++) {
+            iconBitmap[i] = bitmap;
+        }
     }
 
     @Override
@@ -83,6 +95,8 @@ public class TSurfaceView extends SurfaceView implements SurfaceHolder.Callback,
 
         mTextPaint = new Paint();
         mTextPaint.setAntiAlias(true);
+        mTextPaint.setTextSize(28f);
+        mTextPaint.setColor(Color.WHITE);
 
         arcRange = new RectF(padding, padding, radius+padding, radius+padding);
 
@@ -141,10 +155,21 @@ public class TSurfaceView extends SurfaceView implements SurfaceHolder.Callback,
             tempAngle += sweepAngle;
             canvas.drawArc(arcRange, startAngle, sweepAngle, true, mShapePaint);
             startAngle = tempAngle;
+
+            //canvas.drawBitmap(iconBitmap[i], );
+            drawText(canvas, startAngle, sweepAngle, "哈哈哈");
         }
 
         mShapePaint.setColor(Color.GRAY);
         mShapePaint.setStyle(Paint.Style.STROKE);
         canvas.drawCircle(center, center, radius/2, mShapePaint);
+    }
+
+    private void drawText(Canvas canvas, int startAngle, int endAngle, String ss) {
+        Path path = new Path();
+        path.addArc(arcRange, startAngle, endAngle);
+        int hOffset = radius /2 / 8;
+        int vOffset = radius /2 / 6;
+        canvas.drawTextOnPath(ss, path, hOffset, vOffset, mTextPaint);
     }
 }
