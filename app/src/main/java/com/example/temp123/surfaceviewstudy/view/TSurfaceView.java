@@ -95,8 +95,8 @@ public class TSurfaceView extends SurfaceView implements SurfaceHolder.Callback,
 
         mTextPaint = new Paint();
         mTextPaint.setAntiAlias(true);
-        mTextPaint.setTextSize(28f);
-        mTextPaint.setColor(Color.WHITE);
+        mTextPaint.setTextSize(34f);
+        //mTextPaint.setColor(Color.WHITE);
 
         arcRange = new RectF(padding, padding, radius+padding, radius+padding);
 
@@ -154,10 +154,12 @@ public class TSurfaceView extends SurfaceView implements SurfaceHolder.Callback,
             mShapePaint.setColor(colors[i]);
             tempAngle += sweepAngle;
             canvas.drawArc(arcRange, startAngle, sweepAngle, true, mShapePaint);
-            startAngle = tempAngle;
 
             //canvas.drawBitmap(iconBitmap[i], );
-            drawText(canvas, startAngle, sweepAngle, "哈哈哈");
+            drawText(canvas, startAngle, sweepAngle, "哈哈哈"+i);
+            drawIcon(canvas, startAngle, sweepAngle, iconBitmap[i]);
+
+            startAngle = tempAngle;
         }
 
         mShapePaint.setColor(Color.GRAY);
@@ -168,8 +170,15 @@ public class TSurfaceView extends SurfaceView implements SurfaceHolder.Callback,
     private void drawText(Canvas canvas, int startAngle, int endAngle, String ss) {
         Path path = new Path();
         path.addArc(arcRange, startAngle, endAngle);
-        int hOffset = radius /2 / 8;
+        int hOffset = (int) ((radius * Math.PI / arcCount - mTextPaint.measureText(ss)) / 2);
         int vOffset = radius /2 / 6;
         canvas.drawTextOnPath(ss, path, hOffset, vOffset, mTextPaint);
+    }
+
+    private void drawIcon(Canvas canvas, int startAngle, int sweepAngle, Bitmap bitmap) {
+        double rad = (startAngle + sweepAngle / 2) * Math.PI/180;
+        float left = (float) (Math.cos(rad) * radius/2/2 + center - bitmap.getWidth()/2);
+        float top = (float) (Math.sin(rad) * radius/2/2 + center - bitmap.getHeight()/2);
+        canvas.drawBitmap(bitmap, left, top, mShapePaint);
     }
 }
