@@ -27,7 +27,7 @@ public class MainActivity extends AppCompatActivity {
         msg.obj = "hello handler";
         mHandler.sendMessage(msg);
 
-        AsyncTask
+        //AsyncTask
         ThreadLocal<Boolean> threadLocal = new ThreadLocal<>();
         threadLocal.set(false);
         threadLocal.get();
