@@ -5,9 +5,11 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 
 public class MainActivity extends AppCompatActivity {
+    RecyclerView recyclerView;
 
     private Handler mHandler = new Handler(){
         @Override
