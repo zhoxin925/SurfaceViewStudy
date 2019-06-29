@@ -1,5 +1,6 @@
 package com.example.temp123.surfaceviewstudy.view;
 
+import android.animation.ValueAnimator;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
@@ -44,6 +45,59 @@ public class SurfaceViewBuffer extends SurfaceView implements SurfaceHolder.Call
     @Override
     public void surfaceCreated(SurfaceHolder surfaceHolder) {
         new Thread(this).start();
+
+//        int n = 0;
+//        Canvas canvas = sHolder.lockCanvas();
+//        Bitmap tempBitmap = Bitmap.createBitmap(getWidth(), getHeight(), Bitmap.Config.RGB_565);
+//        Canvas tempCanvas = new Canvas(tempBitmap);
+//        for(int i=0;i<20;i++) {
+//            tempCanvas.drawText(i+"", getPaddingLeft(), getPaddingTop() + n, mPaint);
+//            n += 60;
+//        }
+//        if(canvas != null) {
+//            canvas.drawBitmap(tempBitmap, getPaddingLeft(), getPaddingTop(), mPaint);
+//            sHolder.unlockCanvasAndPost(canvas);
+//        }
+
+//        //不开线程的话没有多缓冲问题？
+//        int n = 0;
+//        for(int i=0;i<20;i++) {
+//            Canvas canvas = sHolder.lockCanvas();
+//            if(canvas != null) {
+//                canvas.drawText(i+"", getPaddingLeft(), getPaddingTop() + n, mPaint);
+//                sHolder.unlockCanvasAndPost(canvas);
+//                n += 20;
+//            }
+//            try {
+//                Thread.sleep(600);
+//            } catch (InterruptedException e) {
+//                e.printStackTrace();
+//            }
+//        }
+
+//        ValueAnimator animator = ValueAnimator.ofInt( 0, 1000000000);
+//        animator.setDuration(1000000000);
+//        animator.setInterpolator(null);
+//        animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+//            @Override
+//            public void onAnimationUpdate(ValueAnimator animation) {
+//                int n = 0;
+//                for(int i=0;i<20;i++) {
+//                    Canvas canvas = sHolder.lockCanvas();
+//                    if(canvas != null) {
+//                        canvas.drawText(i+"", getPaddingLeft(), getPaddingTop() + n, mPaint);
+//                        sHolder.unlockCanvasAndPost(canvas);
+//                        n += 60;
+//                    }
+//                    try {
+//                        Thread.sleep(1000);
+//                    } catch (InterruptedException e) {
+//                        e.printStackTrace();
+//                    }
+//                }
+//            }
+//        });
+//        animator.start();
     }
 
     @Override
